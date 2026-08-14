@@ -214,9 +214,9 @@ p.lead{font-size:clamp(15px,1.9vw,17px);color:var(--muted);max-width:52ch;line-h
 /* 1:1 square cards — used by the Android price carousel */
 .carousel.square > figure{width:clamp(230px,68vw,320px)}
 .carousel.square img{aspect-ratio:1/1;object-fit:cover}
-/* 16:9 landscape cards — used by the 诚信图 carousel */
-.carousel.wide > figure{width:clamp(280px,84vw,440px)}
-.carousel.wide img{aspect-ratio:16/9;object-fit:cover}
+/* 9:16 直式卡片 — 诚信图 carousel（图片 1080x1920） */
+.carousel.wide > figure{width:clamp(180px,52vw,250px)}
+.carousel.wide img{aspect-ratio:9/16;object-fit:cover}
 .dots{display:flex;gap:6px;justify-content:center;margin-top:20px}
 .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);display:block;transition:background .2s,width .2s}
 .dots i.on{background:var(--gold);width:20px;border-radius:999px}
