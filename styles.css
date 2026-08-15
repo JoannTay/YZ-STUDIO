@@ -342,3 +342,94 @@ footer .fh{margin-bottom:7px;color:var(--ink);font-weight:700;font-size:14px}
   html{scroll-behavior:auto}
 }
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ============================================================
+   商品页（游戏详情页）
+   ============================================================ */
+.product{display:grid;grid-template-columns:400px 1fr;gap:44px;align-items:start;margin-top:26px}
+@media(max-width:860px){.product{grid-template-columns:1fr;gap:26px}}
+.product-media img{
+  width:100%;border-radius:var(--r-md);border:1px solid var(--line);
+  background:var(--card);aspect-ratio:1;object-fit:cover;
+}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  background:var(--gold-soft);color:#7A5C1B;padding:7px 13px;border-radius:999px;
+}
+.brand-tag{
+  display:inline-block;font-size:12px;font-weight:700;color:var(--red);
+  background:var(--red-soft);padding:5px 12px;border-radius:999px;margin-bottom:12px;
+}
+.product-info h1{font-size:clamp(24px,4.4vw,34px);margin-bottom:6px}
+.stock{font-family:var(--mono);font-size:12px;color:var(--green);font-weight:700;letter-spacing:.06em}
+
+.selector{margin-top:26px;border-top:1px solid var(--line);padding-top:22px}
+.selector .label{
+  font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.selector .label span{font-family:var(--mono);font-size:10.5px;color:var(--muted-2);font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.opts{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px}
+.opt{
+  background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-sm);
+  padding:11px 18px;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);
+  cursor:pointer;transition:all .15s ease;
+}
+.opt:hover{border-color:var(--gold)}
+.opt[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.opts.denoms .opt{min-width:104px;text-align:center;font-family:var(--mono);font-size:13.5px}
+
+.pricebox{
+  background:var(--charcoal);color:#fff;border-radius:var(--r-md);padding:22px 24px;margin-top:4px;
+}
+.pricebox .row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pricebox .sel{font-family:var(--mono);font-size:13px;color:#A9A199}
+.pricebox .amt{font-size:30px;font-weight:800;color:#fff;line-height:1.2}
+.pricebox .amt small{font-size:14px;font-weight:600;color:#A9A199;margin-right:4px}
+.pricebox .hint{font-size:12.5px;color:#A9A199;margin-top:10px;line-height:1.7}
+.pricebox .btn{width:100%;justify-content:center;margin-top:18px}
+
+/* 说明表格 */
+.tabs-lite{display:flex;gap:26px;border-bottom:1px solid var(--line);margin-top:8px;overflow-x:auto;scrollbar-width:none}
+.tabs-lite::-webkit-scrollbar{display:none}
+.tabs-lite button{
+  background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:15px;font-weight:700;
+  color:var(--muted-2);padding:14px 2px;border-bottom:2px solid transparent;white-space:nowrap;
+}
+.tabs-lite button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--red)}
+.tabpanel{padding-top:26px}
+.tabpanel[hidden]{display:none}
+
+.spec{width:100%;border-collapse:collapse;margin-bottom:26px;font-size:14.5px}
+.spec caption{
+  text-align:left;font-weight:800;font-size:16px;color:var(--ink);
+  padding-bottom:12px;
+}
+.spec th,.spec td{border:1px solid var(--line);padding:13px 16px;text-align:left;vertical-align:top;line-height:1.8}
+.spec th{background:var(--paper-2);font-weight:700;width:130px;white-space:nowrap;color:var(--ink)}
+.spec td{color:var(--muted);background:var(--card)}
+.spec ol,.spec ul{margin:0;padding-left:20px}
+.spec li{margin-bottom:6px}
+.spec li:last-child{margin-bottom:0}
+.spec .warn{color:var(--red);font-weight:700}
+@media(max-width:560px){
+  .spec th{width:96px;padding:11px 12px;font-size:13.5px}
+  .spec td{padding:11px 12px;font-size:13.5px}
+}
+
+.fieldlist{
+  background:var(--paper-2);border-radius:var(--r-sm);padding:16px 18px;margin-top:10px;
+  font-family:var(--mono);font-size:13px;line-height:2.1;color:var(--ink);
+}
+
+/* 相关商品 */
+.related{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:26px}
+@media(max-width:860px){.related{grid-template-columns:repeat(3,1fr)}}
+/* 附加服务按钮（健康系统限制） */
+.opts.denoms .opt.addon{
+  font-family:var(--sans);font-size:13px;border-style:dashed;
+  border-color:var(--gold);color:#7A5C1B;background:var(--gold-soft);
+}
+.opts.denoms .opt.addon:hover{border-color:#7A5C1B}
+.opts.denoms .opt.addon[aria-pressed="true"]{background:#7A5C1B;color:#fff;border-color:#7A5C1B;border-style:solid}
