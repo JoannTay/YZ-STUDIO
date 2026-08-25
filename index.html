@@ -222,7 +222,7 @@
     <h2>做了几年，还在做。</h2>
     <p class="lead" style="margin-top:12px">代充这行来来去去的人很多，我们能一直做下去，靠的是诚信经营。</p>
     <div class="grid4">
-      <div><h3>正规注册</h3><p>马来西亚 SSM 注册商号 NS0267249-H，实体登记，有迹可循。</p></div>
+      <div><h3>正规注册</h3><p>马来西亚 SSM 注册商号 NS0267249-H，实体登记，诚信为主。</p></div>
       <div><h3>仅需要扫码即可</h3><p>只需扫码要登录游戏，无需登录微信，也不需要您提供账号和密码。</p></div>
       <div><h3>正规渠道供货</h3><p>官方渠道充值，点券进入你自己的账号，不经手第三方转移。</p></div>
       <div><h3>订单可查</h3><p>每笔订单保留记录与截图。没到账或有异常，凭截图找我们处理。</p></div>
@@ -350,6 +350,59 @@ function setupCarousel(carId, dotsId){
 }
 setupCarousel('priceCar','priceDots');
 setupCarousel('proofCar','proofDots');
+
+/* ---- 诚信图自动右滑 ---- */
+(function(){
+  var car = document.getElementById('proofCar');
+  if (!car) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var STEP_MS = 2600;   /* 每张停留时间 */
+  var timer = null, paused = false, idle = null;
+
+  function cardWidth(){
+    var fig = car.querySelector('figure');
+    if (!fig) return 0;
+    var gap = parseFloat(getComputedStyle(car).gap) || 14;
+    return fig.getBoundingClientRect().width + gap;
+  }
+
+  function next(){
+    if (paused) return;
+    var max = car.scrollWidth - car.clientWidth;
+    if (car.scrollLeft >= max - 4) {
+      car.scrollTo({left: 0, behavior: 'smooth'});      /* 到底回到第一张 */
+    } else {
+      car.scrollBy({left: cardWidth(), behavior: 'smooth'});
+    }
+  }
+
+  function start(){ if (!timer) timer = setInterval(next, STEP_MS); }
+  function stop(){ clearInterval(timer); timer = null; }
+
+  /* 使用者手动操作时暂停，闲置 5 秒后恢复 */
+  function pause(){
+    paused = true;
+    clearTimeout(idle);
+    idle = setTimeout(function(){ paused = false; }, 5000);
+  }
+  ['pointerdown','wheel','touchstart'].forEach(function(ev){
+    car.addEventListener(ev, pause, {passive: true});
+  });
+  car.addEventListener('mouseenter', function(){ paused = true; clearTimeout(idle); });
+  car.addEventListener('mouseleave', function(){ paused = false; });
+
+  /* 只有滚动到画面内才播放，省效能 */
+  var vis = new IntersectionObserver(function(es){
+    es.forEach(function(e){ e.isIntersecting ? start() : stop(); });
+  }, {threshold: .25});
+  vis.observe(car);
+
+  /* 分页切走时暂停 */
+  document.addEventListener('visibilitychange', function(){
+    document.hidden ? stop() : start();
+  });
+})();
 
 /* ---- lightbox ---- */
 var lb = document.getElementById('lb');
