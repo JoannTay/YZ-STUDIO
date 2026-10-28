@@ -37,9 +37,14 @@ a{color:inherit}
 .topbar{background:rgba(251,248,243,.92);backdrop-filter:saturate(180%) blur(14px);
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
-.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none}
-.brand b{font-size:17px;font-weight:800;letter-spacing:.1em}
-.brand span{font-size:11px;color:var(--muted-2);letter-spacing:.28em;font-weight:500}
+.left{display:flex;align-items:center;gap:12px;min-width:0}
+.home{flex:none;display:flex;align-items:center;gap:2px;text-decoration:none;font-size:13px;font-weight:700;
+  color:var(--ink);background:var(--card);border:1px solid var(--line-2);border-radius:999px;padding:5px 12px 5px 9px}
+.home:hover{border-color:var(--red);color:var(--red)}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;min-width:0}
+.brand b{font-size:17px;font-weight:800;letter-spacing:.1em;white-space:nowrap}
+.brand span{font-size:11px;color:var(--muted-2);letter-spacing:.28em;font-weight:500;white-space:nowrap}
+@media(max-width:440px){.brand b{font-size:15px;letter-spacing:.06em}.brand span{display:none}}
 .wa-mini{background:var(--green);color:#fff;text-decoration:none;font-size:13px;font-weight:700;
   padding:7px 14px;border-radius:999px;white-space:nowrap}
 
@@ -78,13 +83,31 @@ h1{font-size:clamp(28px,6vw,42px);font-weight:900;line-height:1.25}
   background:var(--green);color:#fff;font-weight:700;font-size:14.5px;border-radius:12px;padding:10px}
 .order:hover{filter:brightness(1.06)}
 
+/* 诚信图 */
+.proof{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0 44px}
+.proof h2,.more h2{font-size:clamp(22px,4vw,28px);font-weight:900;line-height:1.3}
+.proof .lead{margin-top:6px}
+.strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px 0 6px;scrollbar-width:thin}
+.strip .shot{flex:none;width:clamp(150px,22vw,200px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;
+  scroll-snap-align:start;border:1px solid var(--line);background:var(--card)}
+.strip .shot img{object-fit:cover}
+.ig{display:inline-block;margin-top:14px;font-size:14px;font-weight:700;color:var(--red);text-decoration:none}
+.ig:hover{text-decoration:underline}
+
+/* 回主页 */
+.more{padding:48px 0}
+.more p{color:var(--muted);margin-top:8px;max-width:52ch}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.btns a{flex:1 1 220px;text-align:center;text-decoration:none;font-weight:700;font-size:15px;border-radius:14px;padding:14px 18px}
+.btn-home{background:var(--red);color:#fff}
+.btn-home:hover{background:var(--red-deep)}
+.btn-wa{background:var(--green);color:#fff}
+.btn-wa:hover{filter:brightness(1.06)}
+
 /* footer */
-footer{background:#221E1B;color:#CFC7BC;padding:36px 0 44px;font-size:14px}
-footer h3{color:#fff;font-size:16px;margin-bottom:8px}
-footer p{margin-top:4px}
-footer .big{display:inline-block;margin-top:16px;background:var(--green);color:#fff;text-decoration:none;
-  font-weight:700;padding:11px 22px;border-radius:999px}
-footer small{display:block;margin-top:22px;color:#8E867B;font-size:12px}
+footer{background:#221E1B;color:#CFC7BC;padding:28px 0 32px;font-size:13.5px}
+footer a{color:#fff}
+footer small{display:block;margin-top:10px;color:#8E867B;font-size:12px}
 
 /* lightbox */
 .lb{position:fixed;inset:0;background:rgba(20,17,15,.92);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
@@ -97,7 +120,10 @@ footer small{display:block;margin-top:22px;color:#8E867B;font-size:12px}
 
 <div class="topbar">
   <div class="wrap">
-    <a class="brand" href="/"><b>YZ STUDIO</b> <span>宇宙工作室</span></a>
+    <div class="left">
+      <a class="home" href="/" aria-label="返回主页">‹ 主页</a>
+      <a class="brand" href="/"><b>YZ STUDIO</b> <span>宇宙工作室</span></a>
+    </div>
     <a class="wa-mini" href="https://wa.me/60108326759?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E5%85%85%E5%80%BC" target="_blank" rel="noopener">WhatsApp 下单</a>
   </div>
 </div>
@@ -119,11 +145,30 @@ footer small{display:block;margin-top:22px;color:#8E867B;font-size:12px}
 
 <main class="wrap"><div class="grid" id="grid"></div></main>
 
+<section class="proof" id="proof">
+  <div class="wrap">
+    <span class="eyebrow">Proof of orders</span>
+    <h2>诚信图</h2>
+    <p class="lead">真实成交记录截图，左右滑动查看，点击可放大。</p>
+    <div class="strip" id="strip"></div>
+    <a class="ig" href="https://www.instagram.com/yzstudio2021" target="_blank" rel="noopener">在 Instagram 看更多成交记录 ›</a>
+  </div>
+</section>
+
+<section class="more">
+  <div class="wrap">
+    <h2>想了解更多？</h2>
+    <p>主页有全部支持的游戏、充值流程和常见问题。找不到你玩的游戏，也可以直接 WhatsApp 问我们。</p>
+    <div class="btns">
+      <a class="btn-home" href="/">回主页看看</a>
+      <a class="btn-wa" href="https://wa.me/60108326759?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E5%85%85%E5%80%BC" target="_blank" rel="noopener">WhatsApp 下单</a>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <h3>找不到你玩的游戏？</h3>
-    <p>还有更多中国区游戏可以代充，直接 WhatsApp 问我们，回复当下确认价格。</p>
-    <a class="big" href="https://wa.me/60108326759?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%97%AE%E4%BB%B7%E6%A0%BC" target="_blank" rel="noopener">WhatsApp +60 10-832 6759</a>
+    <div>WhatsApp <a href="https://wa.me/60108326759" target="_blank" rel="noopener">+60 10-832 6759</a> · 每日 11:00–22:00</div>
     <small>YZ Studio 宇宙工作室 · SSM 注册商号 NS0267249-H</small>
   </div>
 </footer>
@@ -143,7 +188,6 @@ const GAMES = [
   { id:'codm',        name:'使命召唤手游',      tag:'安卓',       img:'07-shiming.png' },
   { id:'danzai',      name:'蛋仔派对',          tag:'安卓',       img:'08-danzai.png' },
   { id:'qqfeiche',    name:'QQ飞车',            tag:'安卓',       img:'09-qqfeiche.png' },
-  { id:'yuanmeng',    name:'元梦之星',          tag:'安卓',       img:'10-yuanmeng.png' },
 ];
 const WA = 'https://wa.me/60108326759?text=';
 const grid = document.getElementById('grid'), chips = document.getElementById('chips');
@@ -166,9 +210,19 @@ GAMES.forEach((g, i) => {
   chips.insertAdjacentHTML('beforeend', `<a href="#${g.id}">${g.name}</a>`);
 });
 
+// 诚信图：用主页 image/ 里的 01–10.png
+const strip = document.getElementById('strip');
+for (let n = 1; n <= 10; n++) {
+  const f = String(n).padStart(2, '0');
+  strip.insertAdjacentHTML('beforeend', `
+    <button class="shot" type="button" aria-label="放大成交记录截图 ${n}">
+      <img src="image/${f}.png" alt="YZ Studio 成交记录截图 ${n}" loading="lazy">
+    </button>`);
+}
+
 // 放大查看
 const lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
-grid.addEventListener('click', e => {
+document.addEventListener('click', e => {
   const img = e.target.closest('.shot')?.querySelector('img');
   if (!img) return;
   lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open');
