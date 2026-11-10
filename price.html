@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>YZ Studio｜价格表合集 - 王者荣耀・和平精英・火影忍者・无畏契约</title>
 <meta name="description" content="YZ Studio 全部游戏充值价格表：王者荣耀、和平精英、火影忍者、无畏契约、三角洲行动、使命召唤、蛋仔派对、QQ飞车、元梦之星、iOS 苹果卡。马币付款，WhatsApp 下单。">
 <meta property="og:type" content="website">
@@ -79,6 +82,8 @@ h1{font-size:clamp(28px,6vw,42px);font-weight:900;line-height:1.25}
 .shot img{width:100%;height:100%;object-fit:contain}
 .shot .missing{display:flex;height:100%;align-items:center;justify-content:center;color:var(--muted-2);font-size:13px}
 .card-foot{padding:12px 16px 16px}
+.more{display:block;text-align:center;font-size:13px;color:inherit;opacity:.75;margin-bottom:10px}
+.more:hover{opacity:1;text-decoration:underline}
 .order{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;text-decoration:none;
   background:var(--green);color:#fff;font-weight:700;font-size:14.5px;border-radius:12px;padding:10px}
 .order:hover{filter:brightness(1.06)}
@@ -178,16 +183,16 @@ footer small{display:block;margin-top:10px;color:#8E867B;font-size:12px}
 <script>
 // 顺序 = 热门程度。要调整顺序，直接移动这里的行即可。
 const GAMES = [
-  { id:'wangzhe',     name:'王者荣耀',          tag:'安卓',       hot:true, img:'01-wangzhe.png' },
-  { id:'heping',      name:'和平精英',          tag:'安卓',       hot:true, img:'02-heping.png' },
-  { id:'huoying',     name:'火影忍者',          tag:'安卓',       hot:true, img:'04-huoying.png' },
-  { id:'wuwei',       name:'无畏契约',          tag:'安卓',       hot:true, img:'05-wuwei.png' },
-  { id:'zhongguo',    name:'其他中国游戏',      tag:'安卓',       img:'11-zhongguo.png' },
-  { id:'ios',         name:'iOS 苹果卡',        tag:'iOS',        img:'12-ios-apple.png' },
-  { id:'sanjiaozhou', name:'三角洲行动',        tag:'安卓',       img:'06-sanjiaozhou.png' },
-  { id:'codm',        name:'使命召唤手游',      tag:'安卓',       img:'07-shiming.png' },
-  { id:'danzai',      name:'蛋仔派对',          tag:'安卓',       img:'08-danzai.png' },
-  { id:'qqfeiche',    name:'QQ飞车',            tag:'安卓',       img:'09-qqfeiche.png' },
+  { id:'wangzhe',     name:'王者荣耀',          tag:'安卓',       hot:true, img:'01-wangzhe.png', page:'wangzherongyao' },
+  { id:'heping',      name:'和平精英',          tag:'安卓',       hot:true, img:'02-heping.png', page:'hepingjingying' },
+  { id:'huoying',     name:'火影忍者',          tag:'安卓',       hot:true, img:'04-huoying.png', page:'huoyingrenzhe' },
+  { id:'wuwei',       name:'无畏契约',          tag:'安卓',       hot:true, img:'05-wuwei.png', page:'wuweiqiyue' },
+  { id:'zhongguo',    name:'其他中国游戏',      tag:'安卓',       img:'11-zhongguo.png', page:'zhongguoyouxi' },
+  { id:'ios',         name:'iOS 苹果卡',        tag:'iOS',        img:'12-ios-apple.png', page:'apple-gift-card' },
+  { id:'sanjiaozhou', name:'三角洲行动',        tag:'安卓',       img:'06-sanjiaozhou.png', page:'sanjiaozhouxingdong' },
+  { id:'codm',        name:'使命召唤手游',      tag:'安卓',       img:'07-shiming.png', page:'codm' },
+  { id:'danzai',      name:'蛋仔派对',          tag:'安卓',       img:'08-danzai.png', page:'danzaipaidui' },
+  { id:'qqfeiche',    name:'QQ飞车',            tag:'安卓',       img:'09-qqfeiche.png', page:'qqfeiche' },
 ];
 const WA = 'https://wa.me/60108326759?text=';
 const grid = document.getElementById('grid'), chips = document.getElementById('chips');
@@ -205,7 +210,7 @@ GAMES.forEach((g, i) => {
         <img src="image/price/${g.img}" alt="${g.name} ${g.tag} 充值价格表" loading="${i < 2 ? 'eager' : 'lazy'}"
              onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'missing',textContent:'图片待上传'}))">
       </button>
-      <div class="card-foot"><a class="order" href="${WA}${msg}" target="_blank" rel="noopener">WhatsApp 下单 ${g.name}</a></div>
+      <div class="card-foot"><a class="more" href="games/${g.page}.html">${g.name}充值详情</a><a class="order" href="${WA}${msg}" target="_blank" rel="noopener">WhatsApp 下单 ${g.name}</a></div>
     </article>`);
   chips.insertAdjacentHTML('beforeend', `<a href="#${g.id}">${g.name}</a>`);
 });
