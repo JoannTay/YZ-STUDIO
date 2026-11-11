@@ -16,15 +16,15 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --paper:#FBF8F3;--paper-2:#F3EEE5;--card:#FFFFFF;
-  --ink:#23201D;--muted:#6F6961;--muted-2:#938C82;
-  --red:#AF3526;--red-deep:#8C271B;--red-soft:#F6E7E2;
-  --gold:#B98B2E;--green:#16A34A;
-  --line:#E7E0D4;--line-2:#D8CFBF;
+  --paper:#FFF8EE;--paper-2:#FAF0E0;--card:#FFFDF8;
+  --ink:#17130F;--muted:#6E604E;--muted-2:#9A8970;
+  --red:#C2410C;--red-deep:#9A3412;--red-soft:#FDE1C7;
+  --gold:#B7741A;--green:#16A34A;--moon:#F6A62B;
+  --line:#EEE3CF;--line-2:#E0D0B2;
   --sans:'Inter','Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
 }
@@ -37,14 +37,14 @@ a{color:inherit}
 .wrap{max-width:1060px;margin:0 auto;padding:0 16px}
 
 /* top bar */
-.topbar{background:rgba(251,248,243,.92);backdrop-filter:saturate(180%) blur(14px);
+.topbar{background:rgba(255,248,238,.9);backdrop-filter:saturate(180%) blur(14px);
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
 .left{display:flex;align-items:center;gap:12px;min-width:0}
 .home{flex:none;display:flex;align-items:center;gap:2px;text-decoration:none;font-size:13px;font-weight:700;
   color:var(--ink);background:var(--card);border:1px solid var(--line-2);border-radius:999px;padding:5px 12px 5px 9px}
 .home:hover{border-color:var(--red);color:var(--red)}
-.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;min-width:0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
 .brand b{font-size:17px;font-weight:800;letter-spacing:.1em;white-space:nowrap}
 .brand span{font-size:11px;color:var(--muted-2);letter-spacing:.28em;font-weight:500;white-space:nowrap}
 @media(max-width:440px){.brand b{font-size:15px;letter-spacing:.06em}.brand span{display:none}}
@@ -127,7 +127,7 @@ footer small{display:block;margin-top:10px;color:#8E867B;font-size:12px}
   <div class="wrap">
     <div class="left">
       <a class="home" href="/" aria-label="返回主页">‹ 主页</a>
-      <a class="brand" href="/"><b>YZ STUDIO</b> <span>宇宙工作室</span></a>
+      <a class="brand" href="/"><img src="image/logo-192.webp" width="34" height="34" alt="YZ Studio logo" style="border-radius:50%;border:2px solid var(--ink);align-self:center"><b>YZ STUDIO</b> <span>宇宙工作室</span></a>
     </div>
     <a class="wa-mini" href="https://wa.me/60108326759?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E5%85%85%E5%80%BC" target="_blank" rel="noopener">WhatsApp 下单</a>
   </div>
