@@ -151,6 +151,22 @@ footer small{display:block;margin-top:10px;color:#8E867B;font-size:12px}
 .sheet-send{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:14px;border:2px solid var(--ink);
   background:var(--green);color:#fff;font-size:16px;font-weight:800;text-decoration:none;box-shadow:3px 3px 0 var(--ink)}
 .sheet-more{display:block;text-align:center;font-size:12.5px;color:var(--muted);margin-top:12px}
+
+.sysc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sysc button{font:inherit;cursor:pointer;background:#fff;border:2px solid var(--line-2);border-radius:16px;padding:14px 10px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink);transition:.15s}
+.sysc button svg{width:30px;height:30px}
+.sysc button b{font-size:16px;font-weight:900}
+.sysc button small{font-size:11.5px;color:var(--muted);line-height:1.4;text-align:center}
+.sysc button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--moon)}
+.sysc button[aria-pressed="true"] small{color:#E8DCC6}
+.sys-tip{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.6}
+.need{display:inline-block;font-size:11px;font-weight:800;background:var(--moon);color:var(--ink);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+.locked{opacity:.35;pointer-events:none;filter:grayscale(1)}
+.chosen{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;font-weight:700;background:var(--paper-2);border-radius:10px;padding:8px 12px}
+.chosen b{font-weight:900}
+.only{display:flex;gap:10px;align-items:flex-start;background:#FFF1E3;border:1.5px solid #F3C99A;border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.6;color:#7A3E0C}
+.sheet-send[aria-disabled="true"]{background:#CFC6B6;color:#fff;box-shadow:none;border-color:#CFC6B6;pointer-events:none}
 </style>
 </head>
 <body>
@@ -221,7 +237,7 @@ footer small{display:block;margin-top:10px;color:#8E867B;font-size:12px}
 <script>
 // 顺序 = 热门程度。要调整顺序，直接移动这里的行即可。
 /* 价格（改价格只改这里，要和 games/ 里各页面的价格一致）
-   u = 单位写法；p = 安卓价格 {档位: RM}；ios:true 表示 iOS 同价，否则 iOS 走客服报价；h = 有「腾讯健康系统限制处理」 */
+   u = 单位写法；p = 安卓价格 {档位: RM}；both:true 表示安卓、iOS 同价（两个都能选）；没有 both 的游戏：安卓公开价，iOS 选档位后问客服；card:true 只限 iOS，不用选系统，否则 iOS 走客服报价；h = 有「腾讯健康系统限制处理」 */
 const HEALTH = 10;
 const GAMES = [
   { id:'wangzhe',     name:'王者荣耀',     tag:'安卓', hot:true, img:'01-wangzhe.png',     icon:'wangzherongyao.png', page:'wangzherongyao', u:'点券', h:true,
@@ -230,7 +246,7 @@ const GAMES = [
     p:{10:1, 60:4, 316:21, 718:46, 1368:85, 2118:133, 3548:230, 7048:425} },
   { id:'huoying',     name:'火影忍者',     tag:'安卓', hot:true, img:'04-huoying.png',     icon:'huoyingrenzhe.png',  page:'huoyingrenzhe', u:'¥', h:true,
     p:{6:4, 18:13, 25:18, 50:35, 98:67, 168:113, 198:133, 328:219, 648:425} },
-  { id:'wuwei',       name:'无畏契约',     tag:'安卓', hot:true, img:'05-wuwei.png',       icon:'wuweiqiyue.png',     page:'wuweiqiyue', u:'¥', h:true, ios:true,
+  { id:'wuwei',       name:'无畏契约',     tag:'安卓 / iOS', hot:true, img:'05-wuwei.png',       icon:'wuweiqiyue.png',     page:'wuweiqiyue', u:'¥', h:true, both:true,
     p:{6:4, 18:13, 30:21, 68:46, 128:85, 198:133, 328:219, 648:425} },
   { id:'zhongguo',    name:'其他中国游戏', tag:'安卓', img:'11-zhongguo.png',    icon:'logo-192.webp',      page:'zhongguoyouxi', u:'¥', h:true, askGame:true,
     p:{6:4, 18:13, 30:21, 50:35, 98:67, 118:80, 198:133, 328:219, 648:425} },
@@ -305,43 +321,57 @@ const sheet = document.getElementById('sheet'), sheetBody = document.getElementB
 const fmt = v => Number.isInteger(v) ? String(v) : v.toFixed(2);
 const tierLabel = (g, d) => g.u === '¥' ? `¥${d} 档` : `${d} ${g.u}`;
 let cur = null, st = {};
+const WA_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.75-.86-2-.96-.27-.1-.47-.15-.66.15-.2.3-.76.95-.93 1.15-.17.2-.34.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.66-1.6-.9-2.18-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.5.07-.77.37-.26.3-1 .98-1 2.4s1.03 2.78 1.17 2.98c.15.2 2.02 3.1 4.9 4.34.68.3 1.22.47 1.64.6.69.22 1.31.19 1.8.11.55-.08 1.75-.71 2-1.4.25-.7.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.46A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.15-.43-4.5-1.24l-.32-.19-2.86.87.88-2.79-.21-.33A8.2 8.2 0 1 1 12 20.2z"/></svg>`;
 function openSheet(g){
-  cur = g; st = { sys:'android', d: Object.keys(g.p)[0], health:false };
-  document.getElementById('sheetTitle').innerHTML = `${g.name}<small>选好金额，直接发给客服</small>`;
+  cur = g; st = { sys: null, d: Object.keys(g.p)[0], health:false };
+  document.getElementById('sheetTitle').innerHTML = `${g.name}<small>${g.card ? '选好面额，直接发给客服' : '先选系统，再选金额'}</small>`;
   const im = document.getElementById('sheetImg'); im.src = `image/${g.icon}`; im.alt = g.name;
   drawSheet(); sheet.classList.add('open'); document.body.style.overflow = 'hidden';
 }
 function closeSheet(){ sheet.classList.remove('open'); document.body.style.overflow = ''; }
+const SYSNAME = { android:'安卓', ios:'iOS' };
 function drawSheet(){
-  const g = cur, iosAsk = !g.card && st.sys === 'ios' && !g.ios;
+  const g = cur, needSys = !g.card, ready = !needSys || !!st.sys;
+  const iosAsk = needSys && st.sys === 'ios' && !g.both;          // iOS 没有公开价 → 问客服
   let h = '';
-  if (!g.card) h += `<div class="sheet-lbl">系统</div><div class="seg">
-      <button type="button" data-sys="android" aria-pressed="${st.sys==='android'}">安卓 / All</button>
-      <button type="button" data-sys="ios" aria-pressed="${st.sys==='ios'}">iOS</button></div>`;
-  if (iosAsk) {
-    h += `<div class="sheet-lbl">金额</div><p class="ios-note">iOS（面值）价格和安卓不同，请直接问客服报价。iOS 用户也可以用<a href="games/apple-gift-card.html">中国区苹果卡</a>自己充值。</p>`;
+  if (needSys) {
+    h += `<div class="sheet-lbl">① 你的游戏账号是哪种系统？${st.sys ? '' : '<span class="need">必选</span>'}</div>
+      <div class="sysc">
+        <button type="button" data-sys="android" aria-pressed="${st.sys==='android'}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.08c-1.8 0-3.5.38-4.92 1.06L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg><b>安卓</b><small>三星、小米、华为、OPPO、vivo…</small></button>
+        <button type="button" data-sys="ios" aria-pressed="${st.sys==='ios'}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.41-3.69zM14.1 5.85c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.1 1.76-.96 2.8 1.01.08 2.05-.52 2.68-1.28z"/></svg><b>iOS</b><small>iPhone、iPad</small></button>
+      </div>
+      <p class="sys-tip">${g.both ? '安卓和 iOS 同价，选你玩的那一种就好。' :
+        '安卓和 iOS 的游戏账号是分开的，请选你<b>建游戏角色时用的手机</b>。不确定的话先问客服。'}</p>`;
   } else {
-    h += `<div class="sheet-lbl">${g.card ? '面额' : '金额'}</div><div class="amts">` +
-      Object.entries(g.p).map(([d, v]) => `<button type="button" data-d="${d}" aria-pressed="${st.d===d}"><b>${tierLabel(g, d)}</b><span>RM${fmt(v)}</span></button>`).join('') + `</div>`;
+    h += `<div class="only"><span>⚠️</span><span>只适用于 <b>iPhone 或 iPad</b> 的 Apple ID</span></div>`;
   }
-  if (g.h) h += `<label class="addon"><input type="checkbox" id="hc" ${st.health?'checked':''}> 加购「腾讯健康系统限制处理」+RM${HEALTH}</label>`;
-  const total = iosAsk ? null : g.p[st.d] + (st.health ? HEALTH : 0);
-  h += `<div class="sheet-sum"><span>参考价</span><b>${total === null ? '客服报价' : 'RM' + fmt(total)}</b></div>`;
+  // 金额
+  h += `<div class="${ready ? '' : 'locked'}"><div class="sheet-lbl">${needSys ? '② ' : ''}${g.card ? '面额' : '金额'}</div>`;
+  h += `<div class="amts">` + Object.entries(g.p).map(([d, v]) =>
+      `<button type="button" data-d="${d}" aria-pressed="${st.d===d}"><b>${tierLabel(g, d)}</b><span>${iosAsk ? '问客服' : 'RM' + fmt(v)}</span></button>`).join('') + `</div>`;
+  if (iosAsk) h += `<p class="ios-note" style="margin-top:10px">iOS 价格和安卓不同，选好档位后客服会给你当下报价。也可以买<a href="#order-ios" data-go="ios">中国区苹果卡</a>自己在游戏里充。</p>`;
+  if (g.h) h += `<label class="addon"><input type="checkbox" id="hc" ${st.health?'checked':''}> 加购「腾讯健康系统限制处理」+RM${HEALTH}（不分系统）</label>`;
+  h += `</div>`;
+  if (needSys && st.sys) h += `<div class="chosen">✅ 你选的是：<b>${SYSNAME[st.sys]}</b>${g.both ? '（安卓 / iOS 同价）' : ''}</div>`;
+  const total = !ready || iosAsk ? null : g.p[st.d] + (st.health ? HEALTH : 0);
+  h += `<div class="sheet-sum"><span>参考价</span><b>${!ready ? '—' : total === null ? '客服报价' : 'RM' + fmt(total)}</b></div>`;
   // WhatsApp 讯息
   const lines = [`你好，我想${g.card ? '买' : '充值'} ${g.card ? '中国区苹果卡' : g.name}`];
-  if (!g.card) lines.push(`系统：${st.sys === 'ios' ? 'iOS' : '安卓'}`);
+  if (needSys && st.sys) lines.push(`系统：${SYSNAME[st.sys]}`);
   if (g.askGame) lines.push('游戏名称：（请填写）');
-  lines.push(iosAsk ? '金额：请问 iOS 价格' : `${g.card ? '面额' : '金额'}：${tierLabel(g, st.d)}（RM${fmt(g.p[st.d])}）`);
+  lines.push(`${g.card ? '面额' : '金额'}：${tierLabel(g, st.d)}` + (iosAsk ? '（请问 iOS 价格）' : `（RM${fmt(g.p[st.d])}）`));
   if (st.health) lines.push(`加购：腾讯健康系统限制处理（RM${HEALTH}）`);
   if (total !== null) lines.push(`参考价合计：RM${fmt(total)}`);
-  h += `<a class="sheet-send" href="${WA}${encodeURIComponent(lines.join('\n'))}" target="_blank" rel="noopener">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.75-.86-2-.96-.27-.1-.47-.15-.66.15-.2.3-.76.95-.93 1.15-.17.2-.34.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.66-1.6-.9-2.18-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.5.07-.77.37-.26.3-1 .98-1 2.4s1.03 2.78 1.17 2.98c.15.2 2.02 3.1 4.9 4.34.68.3 1.22.47 1.64.6.69.22 1.31.19 1.8.11.55-.08 1.75-.71 2-1.4.25-.7.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.46A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.15-.43-4.5-1.24l-.32-.19-2.86.87.88-2.79-.21-.33A8.2 8.2 0 1 1 12 20.2z"/></svg>
-      发送给客服</a>
+  const label = !ready ? '请先选择系统' : iosAsk ? '发送给客服，问 iOS 价格' : `发送给客服${needSys ? '（' + SYSNAME[st.sys] + '）' : ''}`;
+  h += `<a class="sheet-send" ${ready ? `href="${WA}${encodeURIComponent(lines.join('\n'))}"` : 'aria-disabled="true"'} target="_blank" rel="noopener">
+      ${ready ? WA_SVG : ''}${label}</a>
     <a class="sheet-more" href="games/${g.page}.html">查看${g.name}充值说明</a>`;
   sheetBody.innerHTML = h;
 }
 sheetBody.addEventListener('click', e => {
   const s = e.target.closest('[data-sys]'), a = e.target.closest('[data-d]');
+  const go = e.target.closest('[data-go]');
+  if (go) { e.preventDefault(); openSheet(GAMES.find(x => x.id === go.dataset.go)); return; }
   if (s) { st.sys = s.dataset.sys; drawSheet(); }
   else if (a) { st.d = a.dataset.d; drawSheet(); }
 });
@@ -353,8 +383,8 @@ grid.addEventListener('click', e => {
   e.preventDefault(); openSheet(GAMES.find(g => g.id === o.dataset.game));
 });
 // price.html#order-wangzhe 直接打开该游戏的下单弹窗
-const ho = location.hash.match(/^#order-(\w+)/), hg = ho && GAMES.find(g => g.id === ho[1]);
-if (hg) openSheet(hg);
+const ho = location.hash.match(/^#order-([a-z]+)(?:-(android|ios))?/), hg = ho && GAMES.find(g => g.id === ho[1]);
+if (hg) { openSheet(hg); if (ho[2] && !hg.card) { st.sys = ho[2]; drawSheet(); } }
 </script>
 </body>
 </html>
