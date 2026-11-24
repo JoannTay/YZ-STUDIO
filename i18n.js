@@ -92,6 +92,7 @@
     "马来西亚 · 新加坡": "Malaysia · Singapore",
     "每日 11:00–22:00": "Daily 11:00–22:00",
     "YZ Studio 为独立第三方充值服务商，与各游戏发行商、腾讯、网易、Apple Inc. 无任何隶属或合作关系。所有游戏名称、商标归各自权利人所有。网页所列价格为参考价，实际以下单时报价为准。": "YZ Studio is an independent third-party top-up service and is not affiliated with any game publisher, Tencent, NetEase or Apple Inc. All game names and trademarks belong to their owners. Prices shown are for reference; the price quoted when you order is final.",
+    "© 2026 YZ Studio 宇宙工作室 版权所有。本站文字、价格表与图片未经许可，禁止复制、转载或用于其他网站。": "© 2026 YZ Studio. All rights reserved. Text, price lists and images on this site may not be copied, republished or used on other websites without permission.",
     "图片放大": "Enlarged image",
     "关闭": "Close",
     "上一张": "Previous",
