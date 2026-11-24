@@ -363,9 +363,9 @@ function drawSheet(){
   if (needSys && st.sys) lines.push(`系统：${SYSNAME[st.sys]}`);
   if (g.askGame) lines.push('游戏名称：（请填写）');
   if (other) lines.push('不充值点券，想充值其他：（请写下要充值或购买的东西）');
-  else lines.push(`${g.card ? '面额' : '金额'}：${tierLabel(g, st.d)}` + (iosAsk ? '（请问 iOS 价格）' : `（RM${fmt(g.p[st.d])}）`));
+  else lines.push(`${g.card ? '面额' : '金额'}：${tierLabel(g, st.d)}`);
   if (st.health) lines.push(`加购：腾讯健康系统限制处理（RM${HEALTH}）`);
-  if (total !== null) lines.push(`参考价合计：RM${fmt(total)}`);
+  lines.push(`价格：${total !== null ? 'RM' + fmt(total) : iosAsk ? '请问 iOS 价格' : '请报价'}`);
   const label = !ready ? '请先选择系统' : iosAsk ? '发送给客服，问 iOS 价格' : `发送给客服${needSys ? '（' + SYSNAME[st.sys] + '）' : ''}`;
   h += `<a class="sheet-send" ${ready ? `href="${WA}${encodeURIComponent(lines.join('\n'))}"` : 'aria-disabled="true"'} target="_blank" rel="noopener">
       ${ready ? WA_SVG : ''}${label}</a>
