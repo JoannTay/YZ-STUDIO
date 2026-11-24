@@ -247,7 +247,7 @@ const GAMES = [
   { id:'huoying',     name:'火影忍者',     tag:'安卓', hot:true, img:'04-huoying.png',     icon:'huoyingrenzhe.png',  page:'huoyingrenzhe', u:'¥', h:true,
     p:{6:4, 18:13, 25:18, 50:35, 98:67, 168:113, 198:133, 328:219, 648:425} },
   { id:'wuwei',       name:'无畏契约',     tag:'安卓 / iOS', hot:true, img:'05-wuwei.png',       icon:'wuweiqiyue.png',     page:'wuweiqiyue', u:'¥', h:true, both:true,
-    p:{6:4, 18:13, 30:21, 68:46, 128:85, 198:133, 328:219, 648:425} },
+    p:{6:4, 10:8, 30:23, 68:50, 128:90, 198:135, 328:221, 648:435} },
   { id:'zhongguo',    name:'其他中国游戏', tag:'安卓', img:'11-zhongguo.png',    icon:'logo-192.webp',      page:'zhongguoyouxi', u:'¥', h:true, askGame:true,
     p:{6:4, 18:13, 30:21, 50:35, 98:67, 118:80, 198:133, 328:219, 648:425} },
   { id:'ios',         name:'iOS 苹果卡',   tag:'iOS',  img:'12-ios-apple.png',   icon:'apple-gift-card.png', page:'apple-gift-card', u:'元', card:true,
@@ -274,7 +274,7 @@ GAMES.forEach((g, i) => {
         <span class="tag${g.hot ? ' hot' : ''}">${g.hot ? '热门 · ' : ''}${g.tag}</span>
       </div>
       <button class="shot" type="button" aria-label="放大 ${g.name} 价格表">
-        <img src="image/price/${g.img}" alt="${g.name} ${g.tag} 充值价格表" loading="${i < 2 ? 'eager' : 'lazy'}"
+        <img src="image/price/${g.img}?v=20261124" alt="${g.name} ${g.tag} 充值价格表" loading="${i < 2 ? 'eager' : 'lazy'}"
              onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'missing',textContent:'图片待上传'}))">
       </button>
       <div class="card-foot"><a class="order" href="${WA}${msg}" data-game="${g.id}" target="_blank" rel="noopener" aria-label="下单 ${g.name}">下单</a></div>
