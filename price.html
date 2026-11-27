@@ -247,14 +247,15 @@ const GAMES = [
   { id:'wangzhe',     name:'王者荣耀',     tag:'安卓', hot:true, img:'01-wangzhe.png',     icon:'wangzherongyao.png', page:'wangzherongyao', u:'点券', h:true,
     p:{10:1, 60:4, 180:13, 300:21, 680:46, 1180:80, 1980:133, 3480:230, 6480:425} },
   { id:'heping',      name:'和平精英',     tag:'安卓', hot:true, img:'02-heping.png',      icon:'hepingjingying.png', page:'hepingjingying', u:'点券', h:true,
-    p:{10:1, 60:4, 316:21, 718:46, 1368:85, 2118:133, 3548:230, 7048:425} },
+    p:{10:1, 60:4, 316:21, 718:46, 1368:85, 2118:133, 3548:219, 7048:425} },
   { id:'huoying',     name:'火影忍者',     tag:'安卓', hot:true, img:'04-huoying.png',     icon:'huoyingrenzhe.png',  page:'huoyingrenzhe', u:'¥', h:true,
     p:{6:4, 18:13, 25:18, 50:35, 98:67, 168:113, 198:133, 328:219, 648:425} },
   { id:'wuwei',       name:'无畏契约',     tag:'安卓 / iOS', hot:true, img:'05-wuwei.png',       icon:'wuweiqiyue.png',     page:'wuweiqiyue', u:'¥', h:true, both:true,
-    p:{6:4, 10:8, 30:23, 68:50, 128:90, 198:135, 328:221, 648:435} },
+    p:{6:4, 10:8, 30:23, 68:46, 128:85, 198:133, 328:219, 648:425} },
   { id:'zhongguo',    name:'其他中国游戏', tag:'安卓', img:'11-zhongguo.png',    icon:'logo-192.webp',      page:'zhongguoyouxi', u:'¥', h:true, askGame:true,
     p:{6:4, 18:13, 30:21, 50:35, 98:67, 118:80, 198:133, 328:219, 648:425} },
   { id:'ios',         name:'iOS 苹果卡',   tag:'iOS',  img:'12-ios-apple.png',   icon:'apple-gift-card.png', page:'apple-gift-card', u:'元', card:true,
+    extras:[{k:'realname', label:'需要实名', price:10}, {k:'phone', label:'要中国手机号（一次验证）', price:13.5}],
     p:{10:7.30, 20:14.50, 30:21.20, 50:34.50, 68:46.05, 88:59.25, 100:67.95, 200:135.05, 300:200.05, 648:430.05} },
   { id:'sanjiaozhou', name:'三角洲行动',   tag:'安卓', img:'06-sanjiaozhou.png', icon:'deltaforce.png',     page:'sanjiaozhouxingdong', u:'¥', h:true,
     p:{6:4, 30:21, 68:46, 128:85, 328:219, 648:425} },
@@ -278,7 +279,7 @@ GAMES.forEach((g, i) => {
         <span class="tag${g.hot ? ' hot' : ''}">${g.hot ? '热门 · ' : ''}${g.tag}</span>
       </div>
       <button class="shot" type="button" aria-label="放大 ${g.name} 价格表">
-        <img src="image/price/${g.img}?v=20261124" alt="${g.name} ${g.tag} 充值价格表" loading="${i < 2 ? 'eager' : 'lazy'}"
+        <img src="image/price/${g.img}?v=20261127" alt="${g.name} ${g.tag} 充值价格表" loading="${i < 2 ? 'eager' : 'lazy'}"
              onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'missing',textContent:'图片待上传'}))">
       </button>
       <div class="card-foot"><a class="order" href="${WA}${msg}" data-game="${g.id}" target="_blank" rel="noopener" aria-label="下单 ${g.name}">下单</a></div>
@@ -327,7 +328,7 @@ const tierLabel = (g, d) => g.u === '¥' ? `¥${d} 档` : `${d} ${g.u}`;
 let cur = null, st = {};
 const WA_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.75-.86-2-.96-.27-.1-.47-.15-.66.15-.2.3-.76.95-.93 1.15-.17.2-.34.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.66-1.6-.9-2.18-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.5.07-.77.37-.26.3-1 .98-1 2.4s1.03 2.78 1.17 2.98c.15.2 2.02 3.1 4.9 4.34.68.3 1.22.47 1.64.6.69.22 1.31.19 1.8.11.55-.08 1.75-.71 2-1.4.25-.7.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.46A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.15-.43-4.5-1.24l-.32-.19-2.86.87.88-2.79-.21-.33A8.2 8.2 0 1 1 12 20.2z"/></svg>`;
 function openSheet(g){
-  cur = g; st = { sys: null, d: Object.keys(g.p)[0], health:false, other:false };
+  cur = g; st = { sys: null, d: Object.keys(g.p)[0], health:false, other:false, ex:{} };
   document.getElementById('sheetTitle').innerHTML = `${g.name}<small>${g.card ? '选好面额，直接发给客服' : '先选系统，再选金额'}</small>`;
   const im = document.getElementById('sheetImg'); im.src = `image/${g.icon}`; im.alt = g.name;
   drawSheet(); sheet.classList.add('open'); document.body.style.overflow = 'hidden';
@@ -357,10 +358,11 @@ function drawSheet(){
   if (iosAsk) h += `<p class="ios-note" style="margin-top:10px">iOS 价格和安卓不同，选好档位后客服会给你当下报价。也可以买<a href="#order-ios" data-go="ios">中国区苹果卡</a>自己在游戏里充。</p>`;
   if (!g.card) h += `<label class="addon"><input type="checkbox" id="oc" ${other?'checked':''}> 不充值点券，充值其他</label>`;
   if (other) h += `<p class="ios-note" style="margin-top:10px">发送后在 WhatsApp 告诉客服你要充值或购买什么，我们给你报价。</p>`;
+  (g.extras || []).forEach(x => { h += `<label class="addon"><input type="checkbox" data-ex="${x.k}" ${st.ex[x.k]?'checked':''}> 加购「${x.label}」+RM${fmt(x.price)}</label>`; });
   if (g.h) h += `<label class="addon"><input type="checkbox" id="hc" ${st.health?'checked':''}> 加购「腾讯健康系统限制处理」+RM${HEALTH}（不分系统）</label>`;
   h += `</div>`;
   if (needSys && st.sys) h += `<div class="chosen">✅ 你选的是：<b>${SYSNAME[st.sys]}</b>${g.both ? '（安卓 / iOS 同价）' : ''}</div>`;
-  const total = !ready || iosAsk || other ? null : g.p[st.d] + (st.health ? HEALTH : 0);
+  const total = !ready || iosAsk || other ? null : g.p[st.d] + (st.health ? HEALTH : 0) + (g.extras || []).reduce((a, x) => a + (st.ex[x.k] ? x.price : 0), 0);
   h += `<div class="sheet-sum"><span>参考价</span><b>${!ready ? '—' : total === null ? '客服报价' : 'RM' + fmt(total)}</b></div>`;
   // WhatsApp 讯息
   const lines = [`你好，我想${g.card ? '买' : '充值'} ${g.card ? '中国区苹果卡' : g.name}`];
@@ -368,6 +370,7 @@ function drawSheet(){
   if (g.askGame) lines.push('游戏名称：（请填写）');
   if (other) lines.push('不充值点券，想充值其他：（请写下要充值或购买的东西）');
   else lines.push(`${g.card ? '面额' : '金额'}：${tierLabel(g, st.d)}`);
+  (g.extras || []).forEach(x => { if (st.ex[x.k]) lines.push(`加购：${x.label}（RM${fmt(x.price)}）`); });
   if (st.health) lines.push(`加购：腾讯健康系统限制处理（RM${HEALTH}）`);
   lines.push(`价格：${total !== null ? 'RM' + fmt(total) : iosAsk ? '请问 iOS 价格' : '请报价'}`);
   const label = !ready ? '请先选择系统' : iosAsk ? '发送给客服，问 iOS 价格' : `发送给客服${needSys ? '（' + SYSNAME[st.sys] + '）' : ''}`;
@@ -383,7 +386,7 @@ sheetBody.addEventListener('click', e => {
   if (s) { st.sys = s.dataset.sys; drawSheet(); }
   else if (a) { st.d = a.dataset.d; drawSheet(); }
 });
-sheetBody.addEventListener('change', e => { if (e.target.id === 'hc') { st.health = e.target.checked; drawSheet(); } if (e.target.id === 'oc') { st.other = e.target.checked; drawSheet(); } });
+sheetBody.addEventListener('change', e => { if (e.target.id === 'hc') { st.health = e.target.checked; drawSheet(); } if (e.target.id === 'oc') { st.other = e.target.checked; drawSheet(); } if (e.target.dataset.ex) { st.ex[e.target.dataset.ex] = e.target.checked; drawSheet(); } });
 sheet.addEventListener('click', e => { if (e.target === sheet || e.target.closest('.sheet-x')) closeSheet(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 grid.addEventListener('click', e => {
